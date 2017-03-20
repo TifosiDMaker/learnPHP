@@ -34,15 +34,37 @@
     .rightAlign {
 	float: right;
 		}
+    .whiteB {
+        background-color: white;
+	    }
   </style>
 </head>
 <body>
   <div id="Wapper">
     <div id="Main">
-      <div id="noteZone" class="bg-info">
-	<p>comments<br><br></p>
-	<p class="secondary"><small>Username<span class="rightAlign">YYYY-MM-DD</span></small></p>
+    <?php
+      include("conn.php");
+      $i = 1;
+      $result = mysql_query("select Username, textfiled, noteTime from Notepad order by noteTime desc", $con);
+      if (!$result) {
+      	die(mysql_error());
+	}
+      while($i < 11 && $rows = mysql_fetch_array($result)) {
+      		if ($i % 2 == 0): ?>
+      <div id="noteZone" class="whiteB">
+	<p><?php echo $rows['textfiled'] ?><br><br></p>
+	<p class="secondary"><small><?php echo $rows['Username'] ?><span class="rightAlign"><?php echo $rows['noteTime'] ?></span></small></p>
       </div>
+      <?php else: ?>
+      <div id="noteZone" class="bg-info">
+        <p><?php echo $rows['textfiled'] ?><br><br></p>
+	<p class="secondary"><small><?php echo $rows['Username'] ?><span class="rightAlign"><?php echo $rows['noteTime'] ?></span></small></p>
+      </div>
+      <?php
+      endif;
+      $i += 1;
+      }
+      ?>
       <div id="writeZone">
         <form method="post">
 	  <div class="form-group">
