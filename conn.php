@@ -7,6 +7,6 @@
   
   mysql_select_db("SMZDM", $con);
 
-  mysql_query("insert into Notepad
-  values('Tifosi', 'dklfejewio32r', current_timestamp)");
+  //mysql_query("insert into Notepad
+  //values('Tifosi', 'dklfejewio32r', current_timestamp)");
 ?>

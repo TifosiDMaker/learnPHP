@@ -23,53 +23,55 @@
 	     background-color:gray;
 	     color:white;
 	    }
+    #noteZone {
+	     color: black; 
+	     padding: 15px 20px 1px 20px;
+	    }
+    .secondary {
+	font-size: small;
+	color: gray;
+      }
+    .rightAlign {
+	float: right;
+		}
   </style>
 </head>
 <body>
   <div id="Wapper">
     <div id="Main">
-      <div id="noteZone">
-	<p class="oddLine">1</p>
-	<p class="evenLine">2</p>
-        <p class="oddLine">1</p>
-        <p class="evenLine">2</p>
-        <p class="oddLine">1</p>
-        <p class="evenLine">2</p>
-        <p class="oddLine">1</p>
-        <p class="evenLine">2</p>
-        <p class="oddLine">1</p>
-        <p class="evenLine">2</p>
+      <div id="noteZone" class="bg-info">
+	<p>comments<br><br></p>
+	<p class="secondary"><small>Username<span class="rightAlign">YYYY-MM-DD</span></small></p>
       </div>
       <div id="writeZone">
         <form method="post">
 	  <div class="form-group">
 	    <label for="postFiled">Post</label>
-	    <textarea class="form-control" id="postFiled" placeholder="Text here" name="postFiled" rows=5 required></textarea>
+	    <textarea class="form-control" id="postFiled" placeholder="Text here" name="postFiled" rows=5 required default=""></textarea>
 	  </div>
 	  <div class="form-group">
 	    <label for="username">Username</label>
 	    <div class="row">
  	      <div class="col-xs-3">
-	        <input class="form-control" id="username" placeholder="Username" name="username" required>
+	        <input class="form-control" id="username" placeholder="Username" name="username" required default="">
 	      </div>
 	    </div>
 	  </div>
-	  <button type="submit" class="btn btn-default">Submit</button>
+	  <button type="submit" class="btn btn-info">Submit</button>
 	</form>
 	<p>
 	<?php
+	  if ($_POST) {
 	  $input = file_get_contents("php://input");
 	  $text = $_POST['postFiled'];
 	  $username = $_POST['username'];
-	  print $input . "Hi";
-	  print "<br>" . $_POST['username'];
-	  include("conn.php")
-	  $insert = "INSERT INTO Notepad VALUES ('$username', '$text', current_timestmap)"
-	  if (!mysql_query($insert, $con)) {
-					    die('Error: ' . mysql_error());
-					   }
-	  echo "1 record added.";
+	  include("conn.php");
+	  $insert = "INSERT INTO Notepad VALUES ('$username', '$text', current_timestamp)";
+	  mysql_query($insert, $con);
 	  mysql_close($con);
+	  header("Location: " . $_SERVER['REQUEST_URI']);
+	  exit();
+	  }
 	?>
 	</p>
       </div>
