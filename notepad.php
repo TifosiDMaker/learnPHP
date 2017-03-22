@@ -64,6 +64,8 @@
       endif;
       $i += 1;
       }
+      mysql_free_result($result);
+      mysql_close($con);
       ?>
       <div id="writeZone">
         <form method="post">
